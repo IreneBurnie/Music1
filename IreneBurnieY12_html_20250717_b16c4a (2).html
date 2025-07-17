@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSC Music 1 Support Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --pink-primary: #ff7eb9;
+            --pink-secondary: #ffafcc;
+            --yellow-primary: #ffd166;
+            --yellow-secondary: #ffed99;
+            --dark: #5a3d5c;
+            --light: #fff9fb;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--pink-secondary), var(--yellow-secondary));
+            color: var(--dark);
+            min-height: 100vh;
+            padding-bottom: 100px;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--pink-primary), var(--yellow-primary));
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            background: white;
+            color: var(--pink-primary);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 15px;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn:hover, .nav-btn.active {
+            background: white;
+            color: var(--pink-primary);
+            transform: translateY(-3px);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .page {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: var(--pink-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--yellow-primary);
+            display: inline-block;
+        }
+        
+        .welcome-box {
+            background: linear-gradient(135deg, var(--yellow-secondary), var(--pink-secondary));
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .welcome-box h2 {
+            color: var(--dark);
+            border-bottom: 3px solid var(--pink-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .card {
+            background: var(--light);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, var(--pink-primary), var(--yellow-primary));
+            color: white;
+            padding: 1.2rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card-body ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .card-body li {
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+        }
+        
+        .tip {
+            background: linear-gradient(to right, #f8f3ff, #fff8f8);
+            border-left: 4px solid var(--yellow-primary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tip-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            color: var(--pink-primary);
+        }
+        
+        /* Accordion Cards for Glossary */
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .accordion-card {
+            background: var(--light);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+        
+        .accordion-header {
+            background: linear-gradient(to right, var(--pink-primary), var(--yellow-primary));
+            color: white;
+            padding: 1.2rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .accordion-header i {
+            transition: transform 0.3s;
+        }
+        
+        .accordion-card.active .accordion-header i {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .accordion-card.active .accordion-content {
+            padding: 1.5rem;
+            max-height: 300px;
+        }
+        
+        /* Listening Lab Styles */
+        .sound-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .sound-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .sound-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .sound-card h3 {
+            color: var(--pink-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .sound-icon {
+            font-size: 3rem;
+            color: var(--yellow-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .sound-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .sound-btn {
+            background: var(--pink-primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: bold;
+        }
+        
+        .sound-btn:hover {
+            background: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .sound-btn.play {
+            background: var(--yellow-primary);
+            color: var(--dark);
+        }
+        
+        .sound-btn.play:hover {
+            background: #ffc44d;
+        }
+        
+        .sound-btn.reveal {
+            background: var(--pink-secondary);
+            color: var(--dark);
+        }
+        
+        .sound-btn.reveal:hover {
+            background: #ff9dc2;
+        }
+        
+        .sound-description {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 2px dashed var(--yellow-primary);
+            display: none;
+        }
+        
+        /* Instrument Section */
+        .instrument-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--pink-secondary);
+        }
+        
+        .instrument-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .instrument-card {
+            background: linear-gradient(to bottom, #fff, #fcf2f7);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+        
+        .instrument-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .instrument-icon {
+            font-size: 3rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .instrument-name {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--pink-primary);
+        }
+        
+        .ensemble-name {
+            font-size: 0.9rem;
+            color: var(--dark);
+            background: var(--yellow-secondary);
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        
+        .audio-player {
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .quote {
+            font-style: italic;
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: linear-gradient(to right, #fce8f4, #fff2d9);
+            border-radius: 15px;
+            border-left: 5px solid var(--pink-primary);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--dark);
+            background: linear-gradient(to right, var(--pink-secondary), var(--yellow-secondary));
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .acknowledgement {
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .credit {
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 90%;
+                margin-bottom: 5px;
+            }
+            
+            .content-grid, .glossary-grid, .sound-grid, .instrument-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-music"></i>
+            </div>
+            <h1>HSC Music 1 Support Hub</h1>
+        </div>
+        <p>Your Complete Guide to Success in NSW HSC Music 1</p>
+        
+        <nav>
+            <button class="nav-btn active" data-page="home"><i class="fas fa-home"></i> Home</button>
+            <button class="nav-btn" data-page="performance"><i class="fas fa-microphone-alt"></i> Performance Tips</button>
+            <button class="nav-btn" data-page="aural"><i class="fas fa-ear"></i> Aural Skills</button>
+            <button class="nav-btn" data-page="ensemble"><i class="fas fa-users"></i> Ensemble</button>
+            <button class="nav-btn" data-page="glossary"><i class="fas fa-book"></i> Terminology</button>
+            <button class="nav-btn" data-page="listening"><i class="fas fa-headphones"></i> Listening Lab</button>
+            <button class="nav-btn" data-page="resources"><i class="fas fa-bookmark"></i> Resources</button>
+        </nav>
+    </header>
+    
+    <main>
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="welcome-box">
+                <h2>Welcome to HSC Music 1 Support!</h2>
+                <p>This comprehensive resource is designed to help NSW HSC Music 1 students excel in their studies. Explore performance techniques, aural skills, ensemble playing, and master key terminology through interactive learning tools.</p>
+            </div>
+            
+            <h2>About HSC Music 1</h2>
+            <p>Music 1 provides students with the opportunity to acquire knowledge, skills, and understanding within a broad musical context. The course focuses on developing musical sensitivity and capability through performance, composition, musicology, and aural activities.</p>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-trophy"></i> Course Objectives
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Develop knowledge and skills about music concepts</li>
+                            <li>Develop skills to evaluate music critically</li>
+                            <li>Understand the impact of technology on music</li>
+                            <li>Develop personal values about music</li>
+                            <li>Perform as a means of self-expression</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-book-open"></i> Course Structure
+                    </div>
+                    <div class="card-body">
+                        <p>Students study three topics exploring different styles, periods, and genres. The concepts covered include:</p>
+                        <ul>
+                            <li>Duration</li>
+                            <li>Pitch</li>
+                            <li>Dynamics and expressive techniques</li>
+                            <li>Tone colour</li>
+                            <li>Texture</li>
+                            <li>Structure</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-graduation-cap"></i> Assessment Components
+                    </div>
+                    <div class="card-body">
+                        <p>HSC Music 1 assessment includes:</p>
+                        <ul>
+                            <li>Performance (solo and/or ensemble)</li>
+                            <li>Composition</li>
+                            <li>Musicology</li>
+                            <li>Aural written examination</li>
+                        </ul>
+                        <p>Each component allows students to demonstrate their musical understanding and skills.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quote">
+                <i class="fas fa-quote-left fa-2x" style="color: var(--pink-primary);"></i>
+                <p>"Music expresses that which cannot be put into words and that which cannot remain silent."</p>
+                <p>- Victor Hugo</p>
+            </div>
+        </section>
+        
+        <!-- Performance Tips Page -->
+        <section id="performance" class="page">
+            <h2><i class="fas fa-microphone-alt"></i> Performance Tips for Success</h2>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        Preparation Strategies
+                    </div>
+                    <div class="card-body">
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-calendar-check"></i>
+                                <h3>Consistent Practice</h3>
+                            </div>
+                            <p>Develop a regular practice schedule with specific goals for each session. Focus on difficult sections first.</p>
+                        </div>
+                        
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-wrench"></i>
+                                <h3>Technical Mastery</h3>
+                            </div>
+                            <p>Break down technically challenging passages. Practice slowly with a metronome, gradually increasing tempo.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        Performance Execution
+                    </div>
+                    <div class="card-body">
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-brain"></i>
+                                <h3>Mental Preparation</h3>
+                            </div>
+                            <p>Visualize success. Practice deep breathing exercises to manage performance anxiety.</p>
+                        </div>
+                        
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-music"></i>
+                                <h3>Musical Expression</h3>
+                            </div>
+                            <p>Focus on phrasing, dynamics, and emotional connection to the music. Tell a story with your performance.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        Practical Advice
+                    </div>
+                    <div class="card-body">
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-video"></i>
+                                <h3>Mock Performances</h3>
+                            </div>
+                            <p>Record yourself regularly and perform for friends/family to simulate exam conditions.</p>
+                        </div>
+                        
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-utensils"></i>
+                                <h3>Physical Readiness</h3>
+                            </div>
+                            <p>Get adequate rest before your performance. Stay hydrated and eat a light meal 2-3 hours beforehand.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quote">
+                <i class="fas fa-quote-left fa-2x" style="color: var(--yellow-primary);"></i>
+                <p>"The music is not in the notes, but in the silence between."</p>
+                <p>- Wolfgang Amadeus Mozart</p>
+            </div>
+        </section>
+        
+        <!-- Aural Skills Page -->
+        <section id="aural" class="page">
+            <h2><i class="fas fa-ear"></i> Developing Aural Skills</h2>
+            <p>Aural skills are essential for HSC Music 1. These skills enable you to recognise, analyse, and discuss musical concepts in various contexts.</p>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        Core Aural Concepts
+                    </div>
+                    <div class="card-body">
+                        <p>Focus on identifying these elements in music excerpts:</p>
+                        <ul>
+                            <li><strong>Duration:</strong> Beat, rhythm, tempo, metre</li>
+                            <li><strong>Pitch:</strong> Melody, harmony, tonality</li>
+                            <li><strong>Dynamics:</strong> Volume changes and expressive techniques</li>
+                            <li><strong>Tone Colour:</strong> Instrumentation and sound qualities</li>
+                            <li><strong>Texture:</strong> Layers of sound and their relationships</li>
+                            <li><strong>Structure:</strong> Form and organization of musical ideas</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        Practice Techniques
+                    </div>
+                    <div class="card-body">
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-headphones"></i>
+                                <h3>Active Listening</h3>
+                            </div>
+                            <p>Listen to diverse musical genres with focused attention. Try to identify specific elements during each listening session.</p>
+                        </div>
+                        
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-pencil-alt"></i>
+                                <h3>Dictation Practice</h3>
+                            </div>
+                            <p>Transcribe simple melodies and rhythms. Start with short phrases and gradually increase complexity.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        Exam Strategies
+                    </div>
+                    <div class="card-body">
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-list-ol"></i>
+                                <h3>Structured Responses</h3>
+                            </div>
+                            <p>Use the concepts of music framework to structure your answers: Duration, Pitch, Dynamics, Tone Colour, Texture, Structure.</p>
+                        </div>
+                        
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-language"></i>
+                                <h3>Musical Terminology</h3>
+                            </div>
+                            <p>Develop a rich vocabulary to accurately describe musical elements and their effects.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Ensemble Performance Page -->
+        <section id="ensemble" class="page">
+            <h2><i class="fas fa-users"></i> Ensemble Performance Excellence</h2>
+            <p>Success in ensemble performance requires teamwork, communication, and musical sensitivity.</p>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        Collaborative Skills
+                    </div>
+                    <div class="card-body">
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-eye"></i>
+                                <h3>Visual Communication</h3>
+                            </div>
+                            <p>Maintain eye contact with other performers. Watch for cues and breathe together for unified entrances.</p>
+                        </div>
+                        
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-balance-scale"></i>
+                                <h3>Balance and Blend</h3>
+                            </div>
+                            <p>Adjust your volume to create a balanced ensemble sound. Match tone quality with other performers.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        Rehearsal Techniques
+                    </div>
+                    <div class="card-body">
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-bullseye"></i>
+                                <h3>Goal-Oriented Practice</h3>
+                            </div>
+                            <p>Set specific objectives for each rehearsal. Focus on challenging sections before running entire pieces.</p>
+                        </div>
+                        
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-record-vinyl"></i>
+                                <h3>Recording Sessions</h3>
+                            </div>
+                            <p>Regularly record rehearsals to identify areas needing improvement from an audience perspective.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        Musical Unity
+                    </div>
+                    <div class="card-body">
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-wind"></i>
+                                <h3>Breathing Together</h3>
+                            </div>
+                            <p>Synchronize breathing for unified phrasing, especially in wind ensembles and vocal groups.</p>
+                        </div>
+                        
+                        <div class="tip">
+                            <div class="tip-header">
+                                <i class="fas fa-sliders-h"></i>
+                                <h3>Interpretation Consensus</h3>
+                            </div>
+                            <p>Discuss and agree on musical interpretations - tempo changes, dynamics, articulation, and emotional expression.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Glossary Page with Accordion Cards -->
+        <section id="glossary" class="page">
+            <h2><i class="fas fa-book"></i> Music Terminology</h2>
+            <p>Click on each term to expand and learn essential HSC Music 1 concepts. Master these for your exams and performances!</p>
+            
+            <div class="glossary-grid">
+                <div class="accordion-card">
+                    <div class="accordion-header">
+                        <span>Duration</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Refers to the lengths of sounds and silences in music. Includes:</p>
+                        <ul>
+                            <li>Beat: The underlying pulse</li>
+                            <li>Rhythm: Patterns of long and short sounds</li>
+                            <li>Tempo: Speed of the beat</li>
+                            <li>Metre: Grouping of beats</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="accordion-card">
+                    <div class="accordion-header">
+                        <span>Pitch</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>The relative highness and lowness of sounds. Includes:</p>
+                        <ul>
+                            <li>Melody: Horizontal succession of pitches</li>
+                            <li>Harmony: Two or more pitches sounding together</li>
+                            <li>Definite/indefinite pitch</li>
+                            <li>Scales and modes</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="accordion-card">
+                    <div class="accordion-header">
+                        <span>Tone Colour</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>The quality that allows identification of sound sources. Affected by:</p>
+                        <ul>
+                            <li>Material (wood, metal, string, etc.)</li>
+                            <li>Method of sound production</li>
+                            <li>Combination of sound sources</li>
+                            <li>Acoustic vs electronic sounds</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="accordion-card">
+                    <div class="accordion-header">
+                        <span>Texture</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>The layers of sound and their function. Types include:</p>
+                        <ul>
+                            <li>Monophonic: Single melody line</li>
+                            <li>Homophonic: Melody with accompaniment</li>
+                            <li>Polyphonic: Multiple independent melodies</li>
+                            <li>Heterophonic: Variations of the same melody</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="accordion-card">
+                    <div class="accordion-header">
+                        <span>Structure</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>The organization and design of music. Common forms:</p>
+                        <ul>
+                            <li>Binary (AB)</li>
+                            <li>Ternary (ABA)</li>
+                            <li>Rondo (ABACA)</li>
+                            <li>Theme and variations</li>
+                            <li>Sonata form</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="accordion-card">
+                    <div class="accordion-header">
+                        <span>Dynamics</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>The volume of sound in music. Includes:</p>
+                        <ul>
+                            <li>Gradations: Pianissimo to fortissimo</li>
+                            <li>Changes: Crescendo and diminuendo</li>
+                            <li>Accents: Emphasis on individual sounds</li>
+                            <li>Expressive techniques</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Listening Lab Page -->
+        <section id="listening" class="page">
+            <h2><i class="fas fa-headphones"></i> Listening Lab: Dynamics & Identification</h2>
+            <p>Develop your aural skills by exploring different chords and scales. Click the play buttons to listen!</p>
+            
+            <h3>Chord Qualities</h3>
+            <div class="sound-grid">
+                <div class="sound-card">
+                    <div class="sound-icon">
+                        <i class="fas fa-guitar"></i>
+                    </div>
+                    <h3>Major Chord</h3>
+                    <p>A bright, happy sounding chord</p>
+                    <div class="sound-controls">
+                        <button class="sound-btn play" onclick="playChord('major')"><i class="fas fa-play"></i> Play</button>
+                        <button class="sound-btn reveal" onclick="toggleDescription(this)"><i class="fas fa-eye"></i> Reveal</button>
+                    </div>
+                    <div class="sound-description">
+                        <p><strong>Major Chord:</strong> Consists of a root note, major third, and perfect fifth. Creates a happy, consonant sound.</p>
+                    </div>
+                </div>
+                
+                <div class="sound-card">
+                    <div class="sound-icon">
+                        <i class="fas fa-guitar"></i>
+                    </div>
+                    <h3>Minor Chord</h3>
+                    <p>A darker, sad sounding chord</p>
+                    <div class="sound-controls">
+                        <button class="sound-btn play" onclick="playChord('minor')"><i class="fas fa-play"></i> Play</button>
+                        <button class="sound-btn reveal" onclick="toggleDescription(this)"><i class="fas fa-eye"></i> Reveal</button>
+                    </div>
+                    <div class="sound-description">
+                        <p><strong>Minor Chord:</strong> Consists of a root note, minor third, and perfect fifth. Creates a sad, melancholic sound.</p>
+                    </div>
+                </div>
+                
+                <div class="sound-card">
+                    <div class="sound-icon">
+                        <i class="fas fa-guitar"></i>
+                    </div>
+                    <h3>Suspended 2nd</h3>
+                    <p>A suspended chord with a 2nd</p>
+                    <div class="sound-controls">
+                        <button class="sound-btn play" onclick="playChord('sus2')"><i class="fas fa-play"></i> Play</button>
+                        <button class="sound-btn reveal" onclick="toggleDescription(this)"><i class="fas fa-eye"></i> Reveal</button>
+                    </div>
+                    <div class="sound-description">
+                        <p><strong>Suspended 2nd (sus2):</strong> Replaces the third with a major second. Creates an open, unresolved sound.</p>
+                    </div>
+                </div>
+                
+                <div class="sound-card">
+                    <div class="sound-icon">
+                        <i class="fas fa-guitar"></i>
+                    </div>
+                    <h3>Suspended 4th</h3>
+                    <p>A suspended chord with a 4th</p>
+                    <div class="sound-controls">
+                        <button class="sound-btn play" onclick="playChord('sus4')"><i class="fas fa-play"></i> Play</button>
+                        <button class="sound-btn reveal" onclick="toggleDescription(this)"><i class="fas fa-eye"></i> Reveal</button>
+                    </div>
+                    <div class="sound-description">
+                        <p><strong>Suspended 4th (sus4):</strong> Replaces the third with a perfect fourth. Creates tension that resolves to a major or minor chord.</p>
+                    </div>
+                </div>
+                
+                <div class="sound-card">
+                    <div class="sound-icon">
+                        <i class="fas fa-guitar"></i>
+                    </div>
+                    <h3>Major 7th</h3>
+                    <p>A jazzy, sophisticated chord</p>
+                    <div class="sound-controls">
+                        <button class="sound-btn play" onclick="playChord('maj7')"><i class="fas fa-play"></i> Play</button>
+                        <button class="sound-btn reveal" onclick="toggleDescription(this)"><i class="fas fa-eye"></i> Reveal</button>
+                    </div>
+                    <div class="sound-description">
+                        <p><strong>Major 7th:</strong> A major triad with a major seventh. Creates a dreamy, jazzy sound.</p>
+                    </div>
+                </div>
+                
+                <div class="sound-card">
+                    <div class="sound-icon">
+                        <i class="fas fa-guitar"></i>
+                    </div>
+                    <h3>Minor 7th</h3>
+                    <p>A mellow, bluesy chord</p>
+                    <div class="sound-controls">
+                        <button class="sound-btn play" onclick="playChord('min7')"><i class="fas fa-play"></i> Play</button>
+                        <button class="sound-btn reveal" onclick="toggleDescription(this)"><i class="fas fa-eye"></i> Reveal</button>
+                    </div>
+                    <div class="sound-description">
+                        <p><strong>Minor 7th:</strong> A minor triad with a minor seventh. Creates a mellow, bluesy sound.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Scale Identification</h3>
+            <div class="sound-grid">
+                <div class="sound-card">
+                    <div class="sound-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3>Pentatonic Scale</h3>
+                    <p>A five-note scale</p>
+                    <div class="sound-controls">
+                        <button class="sound-btn play" onclick="playScale('pentatonic')"><i class="fas fa-play"></i> Play</button>
+                        <button class="sound-btn reveal" onclick="toggleDescription(this)"><i class="fas fa-eye"></i> Reveal</button>
+                    </div>
+                    <div class="sound-description">
+                        <p><strong>Pentatonic Scale:</strong> A five-note scale used in many musical traditions. The major pentatonic sounds bright, while the minor pentatonic has a bluesy feel.</p>
+                    </div>
+                </div>
+                
+                <div class="sound-card">
+                    <div class="sound-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3>Major Scale</h3>
+                    <p>A bright, happy scale</p>
+                    <div class="sound-controls">
+                        <button class="sound-btn play" onclick="playScale('major')"><i class="fas fa-play"></i> Play</button>
+                        <button class="sound-btn reveal" onclick="toggleDescription(this)"><i class="fas fa-eye"></i> Reveal</button>
+                    </div>
+                    <div class="sound-description">
+                        <p><strong>Major Scale:</strong> A seven-note scale with a specific pattern of whole and half steps. Creates a happy, uplifting sound.</p>
+                    </div>
+                </div>
+                
+                <div class="sound-card">
+                    <div class="sound-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3>Minor Scale</h3>
+                    <p>A darker, sad scale</p>
+                    <div class="sound-controls">
+                        <button class="sound-btn play" onclick="playScale('minor')"><i class="fas fa-play"></i> Play</button>
+                        <button class="sound-btn reveal" onclick="toggleDescription(this)"><i class="fas fa-eye"></i> Reveal</button>
+                    </div>
+                    <div class="sound-description">
+                        <p><strong>Minor Scale:</strong> Comes in natural, harmonic, and melodic forms. Creates a sad, melancholic, or dramatic sound.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="instrument-section">
+                <h3>Instrument Identification</h3>
+                <p>Learn to recognize instruments in different ensemble settings:</p>
+                
+                <div class="instrument-grid">
+                    <div class="instrument-card">
+                        <div class="instrument-icon">
+                            <i class="fas fa-drum"></i>
+                        </div>
+                        <div class="instrument-name">Drum Kit</div>
+                        <p>Provides rhythm in rock bands</p>
+                        <div class="ensemble-name">Rock Band</div>
+                    </div>
+                    
+                    <div class="instrument-card">
+                        <div class="instrument-icon">
+                            <i class="fas fa-guitar"></i>
+                        </div>
+                        <div class="instrument-name">Electric Guitar</div>
+                        <p>Provides chords and solos in rock bands</p>
+                        <div class="ensemble-name">Rock Band</div>
+                    </div>
+                    
+                    <div class="instrument-card">
+                        <div class="instrument-icon">
+                            <i class="fas fa-microphone-alt"></i>
+                        </div>
+                        <div class="instrument-name">Lead Vocal</div>
+                        <p>Carries the melody in most bands</p>
+                        <div class="ensemble-name">Rock Band</div>
+                    </div>
+                    
+                    <div class="instrument-card">
+                        <div class="instrument-icon">
+                            <i class="fas fa-violin"></i>
+                        </div>
+                        <div class="instrument-name">Violin</div>
+                        <p>Highest pitched string instrument</p>
+                        <div class="ensemble-name">Orchestra/String Quartet</div>
+                    </div>
+                    
+                    <div class="instrument-card">
+                        <div class="instrument-icon">
+                            <i class="fas fa-drum-steelpan"></i>
+                        </div>
+                        <div class="instrument-name">French Horn</div>
+                        <p>Warm, mellow brass instrument</p>
+                        <div class="ensemble-name">Orchestra</div>
+                    </div>
+                    
+                    <div class="instrument-card">
+                        <div class="instrument-icon">
+                            <i class="fas fa-trumpet"></i>
+                        </div>
+                        <div class="instrument-name">Trumpet</div>
+                        <p>Bright, piercing brass instrument</p>
+                        <div class="ensemble-name">Orchestra/Big Band</div>
+                    </div>
+                    
+                    <div class="instrument-card">
+                        <div class="instrument-icon">
+                            <i class="fas fa-saxophone"></i>
+                        </div>
+                        <div class="instrument-name">Saxophone</div>
+                        <p>Versatile woodwind instrument</p>
+                        <div class="ensemble-name">Big Band/Jazz Ensemble</div>
+                    </div>
+                    
+                    <div class="instrument-card">
+                        <div class="instrument-icon">
+                            <i class="fas fa-drum"></i>
+                        </div>
+                        <div class="instrument-name">Double Bass</div>
+                        <p>Provides low end in jazz ensembles</p>
+                        <div class="ensemble-name">Jazz Ensemble/String Quartet</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Resources Page -->
+        <section id="resources" class="page">
+            <h2><i class="fas fa-bookmark"></i> Additional Resources</h2>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        Official Resources
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>NESA Music 1 Syllabus:</strong> Official course documentation</li>
+                            <li><strong>Past HSC Papers:</strong> Practice with real exam questions</li>
+                            <li><strong>Specimen Papers:</strong> Sample exam papers with marking guidelines</li>
+                            <li><strong>Performance Advice:</strong> Guidelines for preparing performances</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        Practice Tools
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>Aural Training Apps:</strong> Functional Ear Trainer, Complete Ear Trainer</li>
+                            <li><strong>Sight-Reading Practice:</strong> SightReadingFactory.com</li>
+                            <li><strong>Online Metronome:</strong> Free web-based metronomes</li>
+                            <li><strong>Composition Software:</strong> MuseScore (free notation software)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        Study Support
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>Study Groups:</strong> Connect with other Music 1 students</li>
+                            <li><strong>Tutor Recommendations:</strong> Find experienced music tutors</li>
+                            <li><strong>Workshops:</strong> Attend HSC music preparation workshops</li>
+                            <li><strong>Online Forums:</strong> Discuss concepts with peers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quote">
+                <i class="fas fa-quote-left fa-2x" style="color: var(--pink-primary);"></i>
+                <p>"The only truth is music."</p>
+                <p>- Jack Kerouac</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="acknowledgement">
+            We acknowledge the Traditional Owners of Country throughout Australia and their continuing connection to land, waters and community. 
+            We pay our respects to them and their cultures, and to Elders past, present and emerging.
+        </div>
+        <div class="credit">
+            Website by Ms Burnie
+        </div>
+    </footer>
+    
+    <script>
+        // Page navigation
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and pages
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Show corresponding page
+                const pageId = button.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+                
+                // Scroll to top of page
+                window.scrollTo(0, 0);
+            });
+        });
+        
+        // Accordion functionality for glossary
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const card = header.parentElement;
+                card.classList.toggle('active');
+            });
+        });
+        
+        // Toggle description
+        function toggleDescription(button) {
+            const description = button.closest('.sound-card').querySelector('.sound-description');
+            description.style.display = description.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        // Audio context for sound generation
+        let audioContext;
+        
+        // Initialize audio context on first interaction
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+        
+        // Play a chord
+        function playChord(type) {
+            initAudio();
+            
+            // Chord frequencies (simplified for demo)
+            let frequencies;
+            switch(type) {
+                case 'major':
+                    frequencies = [261.63, 329.63, 392.00]; // C4, E4, G4
+                    break;
+                case 'minor':
+                    frequencies = [261.63, 311.13, 392.00]; // C4, D#4, G4
+                    break;
+                case 'sus2':
+                    frequencies = [261.63, 293.66, 392.00]; // C4, D4, G4
+                    break;
+                case 'sus4':
+                    frequencies = [261.63, 349.23, 392.00]; // C4, F4, G4
+                    break;
+                case 'maj7':
+                    frequencies = [261.63, 329.63, 392.00, 493.88]; // C4, E4, G4, B4
+                    break;
+                case 'min7':
+                    frequencies = [261.63, 311.13, 392.00, 466.16]; // C4, D#4, G4, A#4
+                    break;
+                default:
+                    frequencies = [261.63]; // Default to C4
+            }
+            
+            // Create oscillators for each frequency
+            const gainNode = audioContext.createGain();
+            gainNode.connect(audioContext.destination);
+            gainNode.gain.value = 0.2;
+            
+            frequencies.forEach(freq => {
+                const oscillator = audioContext.createOscillator();
+                oscillator.type = 'sine';
+                oscillator.frequency.value = freq;
+                oscillator.connect(gainNode);
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 1.5);
+            });
+        }
+        
+        // Play a scale
+        function playScale(type) {
+            initAudio();
+            
+            // Scale frequencies (simplified for demo)
+            let frequencies;
+            switch(type) {
+                case 'pentatonic':
+                    frequencies = [261.63, 293.66, 329.63, 392.00, 440.00]; // C4, D4, E4, G4, A4
+                    break;
+                case 'major':
+                    frequencies = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25]; // C major scale
+                    break;
+                case 'minor':
+                    frequencies = [261.63, 293.66, 311.13, 349.23, 392.00, 415.30, 466.16, 523.25]; // C minor scale
+                    break;
+                default:
+                    frequencies = [261.63, 293.66, 329.63]; // First three notes of C major
+            }
+            
+            // Play each note in sequence
+            const gainNode = audioContext.createGain();
+            gainNode.connect(audioContext.destination);
+            gainNode.gain.value = 0.2;
+            
+            let currentTime = audioContext.currentTime;
+            frequencies.forEach((freq, i) => {
+                const oscillator = audioContext.createOscillator();
+                oscillator.type = 'sine';
+                oscillator.frequency.value = freq;
+                oscillator.connect(gainNode);
+                oscillator.start(currentTime + i * 0.5);
+                oscillator.stop(currentTime + i * 0.5 + 0.4);
+            });
+        }
+    </script>
+</body>
+</html>
